@@ -11,7 +11,11 @@
         <!-- Barra de navegación, si la necesitas -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-        <a class="navbar-brand" href="#">Gestión</a>
+        <!-- Este enlace llevará al Dashboard -->
+        <a class="navbar-brand" href="#"> @yield('title') </a> 
+        <!-- Otras opciones de navegación aquí -->
+    </div>
+</nav>
 
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav me-auto">
