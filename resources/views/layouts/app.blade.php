@@ -3,41 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Usuarios</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>@yield('title', 'Gestión de Usuarios y Departamentos')</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Estilos personalizados -->
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .navbar {
+            margin-bottom: 20px;
+        }
+        .card {
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Barra de navegación, si la necesitas -->
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-        <!-- Este enlace llevará al Dashboard -->
-        <a class="navbar-brand" href="#"> @yield('title') </a> 
-        <!-- Otras opciones de navegación aquí -->
-    </div>
-</nav>
-
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav me-auto">
-                @auth
-                    <li class="nav-item"><a class="nav-link" href="{{ route('usuarios.index') }}">Usuarios</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('departamentos.index') }}">Departamentos</a></li>
-                @endauth
-            </ul>
-            @auth
-                <form action="{{ route('logout') }}" method="POST">
-                    @csrf
-                    <button type="submit" class="btn btn-danger btn-sm">Cerrar Sesión</button>
-                </form>
-            @else
-            @endauth
+    <!-- Barra de navegación -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{{route ('welcome')}}">@yield('title')</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
         </div>
-    </div>
-</nav>
-        <!-- Contenido principal -->
-        @yield('content')  <!-- Aquí se insertará el contenido de cada vista específica -->
-    </div>
+    </nav>
+    <!-- Contenido principal -->
+    <div class="container">
+    @yield('content')
+</div>
 
+@if(session('success'))
+    <div class="alert alert-success mt-3">
+        {{ session('success') }} <!-- Muestra un mensaje de éxito almacenado en la sesión -->
+    </div>
+@endif
+
+@if($errors->any())
+    <div class="alert alert-danger mt-3">
+        <ul>
+            @foreach($errors->all() as $error)
+                <li>{{ $error }}</li> <!-- Muestra cada error de validación -->
+            @endforeach
+        </ul>
+    </div>
+@endif
+   
+    <!-- Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

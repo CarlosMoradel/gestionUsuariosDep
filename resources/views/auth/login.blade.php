@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Login')
+
 @section('content')
 <div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
     <div class="card" style="width: 400px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
@@ -7,6 +7,11 @@
             <h3>Iniciar Sesión</h3>
         </div>
         <div class="card-body">
+            @if(session('error'))
+                <div class="alert alert-danger text-center">
+                    {{ session('error') }} <!-- Muestra el mensaje de error si las credenciales son incorrectas -->
+                </div>
+            @endif
             <form action="{{ route('login') }}" method="POST">
                 @csrf
                 <div class="mb-3">
@@ -16,10 +21,6 @@
                 <div class="mb-3">
                     <label for="contraseña" class="form-label">Contraseña:</label>
                     <input type="password" class="form-control" id="contraseña" name="contraseña" placeholder="Ingresa tu contraseña" required>
-                </div>
-                <div class="mb-3 form-check">
-                    <input type="checkbox" class="form-check-input" id="rememberMe">
-                    <label class="form-check-label" for="rememberMe">Recordarme</label>
                 </div>
                 <button type="submit" class="btn btn-primary w-100">Iniciar Sesión</button>
             </form>

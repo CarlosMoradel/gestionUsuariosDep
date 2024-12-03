@@ -19,14 +19,16 @@ class AuthController extends Controller
             'contraseña' => 'required|string|min:8',
         ]);
         // Verificar las credenciales
-        $usuario = Usuario::where('correo', $request->correo)->first();
-        if ($usuario && password_verify($request->contraseña, $usuario->contraseña)) {
-            // Iniciar sesión manualmente
-            Auth::login($usuario);
-            return redirect()->route('welcome')->with('success', 'Inicio de sesión exitoso.');
-        } else {
-            return back()->withErrors(['correo' => 'Credenciales incorrectas.'])->withInput();
-        }
+    $usuario = Usuario::where('correo', $request->correo)->first();
+
+    if ($usuario && password_verify($request->contraseña, $usuario->contraseña)) {
+        // Iniciar sesión manualmente
+        Auth::login($usuario);
+        return redirect()->route('welcome')->with('success', 'Inicio de sesión exitoso.');
+    } else {
+        // Redirigir con mensaje de error si las credenciales son incorrectas
+        return back()->with('error', 'Las credenciales son incorrectas. Inténtalo nuevamente.')->withInput();
+    }
     }
       /**
      * Logout del usuario.
