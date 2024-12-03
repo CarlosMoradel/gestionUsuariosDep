@@ -26,7 +26,6 @@
                     <button type="submit" class="btn btn-danger btn-sm">Cerrar Sesión</button>
                 </form>
             @else
-                <a href="{{ route('login') }}" class="btn btn-success btn-sm">Iniciar Sesión</a>
             @endauth
         </div>
     </div>

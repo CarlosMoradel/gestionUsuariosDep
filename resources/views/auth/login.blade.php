@@ -2,9 +2,6 @@
 @section('title', 'Iniciar Sesión')
 @section('content')
 <div class="card">
-    <div class="card-header">
-        <h3>Iniciar Sesión</h3>
-    </div>
     <div class="card-body">
         <form action="{{ route('login') }}" method="POST">
             @csrf
