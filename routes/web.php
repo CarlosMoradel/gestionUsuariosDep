@@ -5,7 +5,7 @@ use App\Http\Controllers\DepartamentoController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\AuthController;
 
-Route::get('/', function () {
+Route::get('/welcome', function () {
     return view('welcome');
 })->name('welcome');
 
@@ -18,8 +18,8 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 // Rutas protegidas por autenticación
 
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard'); // Vista del dashboard
+    Route::get('/', function () {
+        return view('dashboard');
     })->name('dashboard');
 });
 
