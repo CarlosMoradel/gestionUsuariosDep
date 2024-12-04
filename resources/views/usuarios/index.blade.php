@@ -25,14 +25,21 @@
                         <td>{{ $usuario->telefono }}</td>
                         <td>{{ $usuario->direccion }}</td>
                         <td>{{ $usuario->departamento->nombre }}</td>
-                        <td>
-                            <a href="{{ route('usuarios.edit', $usuario) }}" class="btn btn-warning">Editar</a>
-                            <form action="{{ route('usuarios.destroy', $usuario) }}" method="POST" style="display:inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger">Eliminar</button>
-                            </form>
-                        </td>
+                        <<td>
+    <a href="{{ route('usuarios.edit', $usuario) }}" class="btn btn-warning">Editar</a>
+    @if($usuario->trashed())
+        <form action="{{ route('usuarios.restore', $usuario) }}" method="POST" style="display:inline;">
+            @csrf
+            <button type="submit" class="btn btn-success">Restaurar</button>
+        </form>
+    @else
+        <form action="{{ route('usuarios.destroy', $usuario) }}" method="POST" style="display:inline;">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn-danger">Eliminar</button>
+        </form>
+    @endif
+</td>
                     </tr>
                 @endforeach
             </tbody>

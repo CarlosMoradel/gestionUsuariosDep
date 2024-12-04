@@ -10,7 +10,7 @@ class UsuarioController extends Controller
     // Método para mostrar todos los usuarios (index)
     public function index()
     {
-        $usuarios = Usuario::with('departamento')->paginate(10);  // Paginación de 10 usuarios por página
+        $usuarios = Usuario::withTrashed()->paginate(10); // Muestra todos los usuarios, incluidos los eliminados
         return view('usuarios.index', compact('usuarios'));
     }
 
@@ -80,12 +80,20 @@ class UsuarioController extends Controller
     }
 
     // Método para eliminar un usuario (destroy)
-    public function destroy(Usuario $usuario)
-    {
-        // Eliminar el usuario
-        $usuario->delete();
+    public function destroy($id)
+{
+    $usuario = Usuario::findOrFail($id);
+    $usuario->delete(); // Esto marca al usuario como eliminado, no lo elimina permanentemente.
 
-        // Redirigir a la lista de usuarios
-        return redirect()->route('usuarios.index');
-    }
+    return redirect()->route('usuarios.index')->with('success', 'Usuario eliminado correctamente.');
+}
+    
+public function restore($id)
+{
+    $usuario = Usuario::withTrashed()->findOrFail($id);
+    $usuario->restore(); // Restaura el usuario
+
+    return redirect()->route('usuarios.index')->with('success', 'Usuario restaurado correctamente.');
+}
+    
 }

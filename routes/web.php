@@ -26,3 +26,4 @@ Route::middleware('auth')->group(function () {
 Route::get('/usuarios', [UsuarioController::class, 'index'])->name('usuarios.index');
 Route::get('/departamentos', [DepartamentoController::class, 'index'])->name('departamentos.index'); // Esta es la ruta correcta
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('/usuarios/{usuario}/restore', [UsuarioController::class, 'restore'])->name('usuarios.restore');
