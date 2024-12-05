@@ -30,12 +30,9 @@ class UsuarioController extends Controller
             'correo' => 'required|email|unique:usuarios',
             'telefono' => 'required|max:15',
             'direccion' => 'required|max:255',
-            'contraseña' => 'required|min:6',
             'departamento_id' => 'required|exists:departamentos,id',
         ]);
 
-        // Encriptar la contraseña
-        $validated['contraseña'] = bcrypt($validated['contraseña']);
 
         // Crear el usuario
         Usuario::create($validated);
@@ -60,17 +57,9 @@ class UsuarioController extends Controller
             'correo' => 'required|email|unique:usuarios,correo,' . $usuario->id,
             'telefono' => 'required|max:15',
             'direccion' => 'required|max:255',
-            'contraseña' => 'nullable|min:6',
             'departamento_id' => 'required|exists:departamentos,id',
         ]);
 
-        // Si se proporciona una nueva contraseña, encriptarla
-        if ($request->filled('contraseña')) {
-            $validated['contraseña'] = bcrypt($validated['contraseña']);
-        } else {
-            // Si no se proporciona contraseña, mantener la actual
-            unset($validated['contraseña']);
-        }
 
         // Actualizar el usuario
         $usuario->update($validated);

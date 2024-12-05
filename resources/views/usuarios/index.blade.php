@@ -24,27 +24,33 @@
                         <td>{{ $usuario->correo }}</td>
                         <td>{{ $usuario->telefono }}</td>
                         <td>{{ $usuario->direccion }}</td>
-                        <td>{{ $usuario->departamento->nombre }}</td>
-                        <<td>
-    <a href="{{ route('usuarios.edit', $usuario) }}" class="btn btn-warning">Editar</a>
-    @if($usuario->trashed())
-        <form action="{{ route('usuarios.restore', $usuario) }}" method="POST" style="display:inline;">
-            @csrf
-            <button type="submit" class="btn btn-success">Restaurar</button>
-        </form>
-    @else
-        <form action="{{ route('usuarios.destroy', $usuario) }}" method="POST" style="display:inline;">
-            @csrf
-            @method('DELETE')
-            <button type="submit" class="btn btn-danger">Eliminar</button>
-        </form>
-    @endif
-</td>
+                        <td>
+                            {{-- Verifica si el departamento está eliminado --}}
+                            @if($usuario->departamento && $usuario->departamento->trashed())
+                                <span class="text-muted">Departamento Eliminado</span>
+                            @else
+                                {{ $usuario->departamento ? $usuario->departamento->nombre : 'No asignado' }}
+                            @endif
+                        </td>
+                        <td>
+                            <a href="{{ route('usuarios.edit', $usuario) }}" class="btn btn-warning">Editar</a>
+                            @if($usuario->trashed())
+                                <form action="{{ route('usuarios.restore', $usuario) }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    <button type="submit" class="btn btn-success">Restaurar</button>
+                                </form>
+                            @else
+                                <form action="{{ route('usuarios.destroy', $usuario) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                                </form>
+                            @endif
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
-
         <div class="d-flex justify-content-center">
             {{ $usuarios->links() }}
         </div>

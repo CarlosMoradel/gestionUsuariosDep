@@ -5,22 +5,9 @@ use App\Http\Controllers\DepartamentoController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\AuthController;
 
-Route::get('/welcome', function () {
+Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
-
-// Rutas públicas de autenticación
-Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [AuthController::class, 'login']);
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-
-// Rutas protegidas por autenticación
-Route::middleware('auth')->group(function () {
-    // Ruta para el dashboard (inicio después de login)
-    Route::get('/', function () {
-        return view('dashboard');
-    })->name('dashboard');
-});
 
  // Rutas de gestión de usuarios y departamentos (CRUD)
  Route::resource('departamentos', DepartamentoController::class);

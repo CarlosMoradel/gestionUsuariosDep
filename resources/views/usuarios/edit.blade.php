@@ -29,11 +29,6 @@
             </div>
 
             <div class="form-group">
-                <label for="contraseña">Contraseña (opcional):</label>
-                <input type="password" class="form-control" id="contraseña" name="contraseña">
-            </div>
-
-            <div class="form-group">
                 <label for="departamento_id">Departamento:</label>
                 <select class="form-control" id="departamento_id" name="departamento_id" required>
                     @foreach($departamentos as $departamento)

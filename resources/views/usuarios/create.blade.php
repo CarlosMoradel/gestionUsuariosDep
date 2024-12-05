@@ -26,12 +26,6 @@
                 <label for="direccion">Dirección:</label>
                 <input type="text" class="form-control" id="direccion" name="direccion" required>
             </div>
-
-            <div class="form-group">
-                <label for="contraseña">Contraseña:</label>
-                <input type="password" class="form-control" id="contraseña" name="contraseña" required>
-            </div>
-
             <div class="form-group">
                 <label for="departamento_id">Departamento:</label>
                 <select class="form-control" id="departamento_id" name="departamento_id" required>

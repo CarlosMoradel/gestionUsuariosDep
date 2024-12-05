@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('correo')->unique();
             $table->string('telefono');
             $table->string('direccion');
-            $table->string('contraseña');
             $table->foreignId('departamento_id')->constrained('departamentos')->onDelete('cascade');
             $table->timestamps();
         });
