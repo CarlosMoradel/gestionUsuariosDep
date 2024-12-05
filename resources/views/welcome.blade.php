@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="text-center mt-5">
-            <h1 class="display-4 text-primary mb-4">Bienvenido a mi CRUD</h1>
+            <h1 class="display-4 text-primary mb-4">Bienvenido</h1>
 
             <!-- Contenedor de botones -->
             <div class="btn-container">
