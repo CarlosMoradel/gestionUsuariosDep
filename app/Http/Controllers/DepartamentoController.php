@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Departamento;
@@ -9,7 +10,8 @@ class DepartamentoController extends Controller
     // Mostrar todos los departamentos (index)
     public function index()
     {
-        $departamentos = Departamento::paginate(10);  // Paginación de 10 departamentos por página
+        // Mostrar solo los departamentos no eliminados
+        $departamentos = Departamento::withTrashed()->paginate(10);
         return view('departamentos.index', compact('departamentos'));
     }
 
@@ -22,16 +24,13 @@ class DepartamentoController extends Controller
     // Almacenar un nuevo departamento (store)
     public function store(Request $request)
     {
-        // Validar los datos
         $validated = $request->validate([
             'nombre' => 'required|max:255',
             'descripcion' => 'required|max:500',
         ]);
 
-        // Crear el departamento
         Departamento::create($validated);
 
-        // Redirigir a la lista de departamentos
         return redirect()->route('departamentos.index')->with('success', 'Departamento creado exitosamente.');
     }
 
@@ -44,24 +43,30 @@ class DepartamentoController extends Controller
     // Actualizar un departamento existente (update)
     public function update(Request $request, Departamento $departamento)
     {
-        // Validar los datos
         $validated = $request->validate([
             'nombre' => 'required|max:255',
             'descripcion' => 'required|max:500',
         ]);
 
-        // Actualizar el departamento
         $departamento->update($validated);
 
-        // Redirigir a la lista de departamentos
         return redirect()->route('departamentos.index')->with('success', 'Departamento actualizado exitosamente.');
     }
 
-    // Eliminar un departamento (destroy)
+    // Eliminar un departamento (soft delete)
     public function destroy(Departamento $departamento)
     {
-        $departamento->delete();
+        $departamento->delete(); // Esto realiza una eliminación suave
+        return redirect()->route('departamentos.index')->with('success', 'Departamento eliminado correctamente.');
+    }
 
-        return redirect()->route('departamentos.index')->with('success', 'Departamento eliminado exitosamente.');
+    // Restaurar un departamento eliminado (restore)
+    public function restore($id)
+    {
+        $departamento = Departamento::withTrashed()->findOrFail($id);
+        $departamento->restore(); // Restaura el departamento
+
+        return redirect()->route('departamentos.index')->with('success', 'Departamento restaurado correctamente.');
     }
 }
+

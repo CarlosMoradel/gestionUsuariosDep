@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title','Lista de Departamentos')
+@section('title', 'Lista de Departamentos')
 @section('content')
     <div class="container">
         <h2>Lista de Departamentos</h2>
@@ -21,11 +21,21 @@
                         <td>{{ $departamento->descripcion }}</td>
                         <td>
                             <a href="{{ route('departamentos.edit', $departamento) }}" class="btn btn-warning">Editar</a>
-                            <form action="{{ route('departamentos.destroy', $departamento) }}" method="POST" style="display:inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger">Eliminar</button>
-                            </form>
+
+                            @if($departamento->trashed())
+                                <!-- Botón para restaurar -->
+                                <form action="{{ route('departamentos.restore', $departamento->id) }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    <button type="submit" class="btn btn-success">Restaurar</button>
+                                </form>
+                            @else
+                                <!-- Botón para eliminar -->
+                                <form action="{{ route('departamentos.destroy', $departamento) }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                                </form>
+                            @endif
                         </td>
                     </tr>
                 @endforeach

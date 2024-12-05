@@ -11,11 +11,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('departamentos', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('nombre');
-            $table->text('descripcion');
-            $table->timestamps();
+        Schema::table('departamentos', function (Blueprint $table) {
+            $table->softDeletes(); // Agrega la columna deleted_at
         });
     }
 
@@ -24,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('departamentos');
+        Schema::table('departamentos', function (Blueprint $table) {
+            $table->dropSoftDeletes(); // Elimina la columna deleted_at
+        });
     }
 };
